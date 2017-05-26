@@ -1,9 +1,13 @@
-const { resolve } = require('path');
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-    context: resolve(__dirname, 'src'),
+    context: path.join(__dirname, 'src'),
+
+    resolve: {
+        modules: ['src', 'node_modules']
+    },
 
     entry: [
         'react-hot-loader/patch',
@@ -14,7 +18,7 @@ module.exports = {
 
     output: {
         filename: 'bundle.js',
-        path: resolve(__dirname, 'dist'),
+        path: path.join(__dirname, 'dist'),
         publicPath: '/'
     },
 
@@ -22,7 +26,7 @@ module.exports = {
 
     devServer: {
         hot: true,
-        contentBase: resolve(__dirname, 'dist'),
+        contentBase: path.join(__dirname, 'dist'),
         publicPath: '/',
         port: 8080
     },
@@ -30,11 +34,20 @@ module.exports = {
     module: {
         rules: [{
                 test: /\.jsx?$/,
-                use: [ 'babel-loader', ],
+                use: [ 'babel-loader' ],
+                include: path.join(__dirname, 'src'),
                 exclude: /node_modules/
             }, {
-                test: /\.css$/,
-                use: [ 'style-loader', 'css-loader?modules', ],
+                test: /\.jsx?$/,
+                loader: 'eslint-loader',
+                include: path.join(__dirname, 'src'),
+                options: {
+                    configFile: './.eslintrc',
+                    emitWarning: true
+                }
+            }, {
+                test: /\.(css|scss)$/,
+                use: [ 'style-loader', 'css-loader', 'postcss-loader', 'sass-loader?outputStyle=expanded&sourceMap']
             }
         ]
     },
