@@ -1,3 +1,4 @@
+import 'styles/styles.scss'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
@@ -9,6 +10,6 @@ if (module.hot) {
 }
 
 ReactDOM.render(
-    React.createElement(AppContainer, {}, React.createElement(Login)),
+    React.createElement(AppContainer, { className: 'app-container' }, React.createElement(Login)),
     document.getElementById('root')
 )

@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
     context: path.join(__dirname, 'src'),
@@ -45,10 +46,24 @@ module.exports = {
                     configFile: './.eslintrc',
                     emitWarning: true
                 }
-            }, {
+            },/* {
                 test: /\.(css|scss)$/,
                 use: [ 'style-loader', 'css-loader', 'postcss-loader', 'sass-loader?outputStyle=expanded&sourceMap']
+            },*/
+            {
+                test: /\.(css|scss)$/,
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader?modules&localIdentName=[local]___[hash:base64:5]&sourceMap',
+                        'postcss-loader',
+                        'sass-loader?outputStyle=expanded&sourceMap']
+                })
+            }, {
+                loader: 'sass-loader',
+                include: path.join(__dirname, 'src', 'styles')
             }
+
         ]
     },
 
@@ -59,6 +74,7 @@ module.exports = {
             template: 'index.html',
             filename: 'index.html',
             inject: 'body'
-        })
+        }),
+        new ExtractTextPlugin({ filename: 'assets/styles/styles.css', disable: true })
     ]
 }

@@ -1,14 +1,23 @@
-// @import 'variables';
+@import 'src/styles/variables.scss';
+
 .button {
-    // background-color: $color-green;
-    // color: $color-white;
+    border-radius: 2px;
+    text-align: center;
 }
 
 .hiddenButton {
     display: none;
 }
 
+.hiddenButton:disabled + label {
+    background-color: $color-dark;
+}
+
 .label {
     cursor: pointer;
     user-select: none;
+    padding: $size-xsmall $size-small;
+    background-color: $color-green;
+    color: $color-white;
+    display: block;
 }

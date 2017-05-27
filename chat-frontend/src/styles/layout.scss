@@ -1,5 +1,14 @@
-.container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 50vh 50vh;
+:global {
+    #root {
+        display: flex;
+    }
+
+    .layout {
+        height: 100vh;
+        width: 100%;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 $size-large;
+    }
 }

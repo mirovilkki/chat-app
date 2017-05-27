@@ -1,0 +1,143 @@
+@import 'variables';
+
+:global {
+    .margin--none {
+        margin: 0 !important;
+    }
+
+    .margin--xsmall {
+        margin: $size-xsmall !important;
+    }
+
+    .margin--small {
+        margin: $size-small !important;
+    }
+
+    .margin--msmall {
+        margin: $size-msmall !important;
+    }
+
+    .margin--medium {
+        margin: $size-medium !important;
+    }
+
+    .margin--large {
+        margin: $size-large !important;
+    }
+
+    .margin--xlarge {
+        margin: $size-xlarge !important;
+    }
+
+    .margin--top-none {
+        margin-top: 0 !important;
+    }
+
+    .margin--top-xsmall {
+        margin-top: $size-xsmall !important;
+    }
+
+    .margin--top-small {
+        margin-top: $size-small !important;
+    }
+
+    .margin--top-msmall {
+        margin-top: $size-msmall !important;
+    }
+
+    .margin--top-medium {
+        margin-top: $size-medium !important;
+    }
+
+    .margin--top-large {
+        margin-top: $size-large !important;
+    }
+
+    .margin--top-xlarge {
+        margin-top: $size-xlarge !important;
+    }
+
+    .margin--right-none {
+        margin-right: 0 !important;
+    }
+
+    .margin--right-xsmall {
+        margin-right: $size-xsmall !important;
+    }
+
+    .margin--right-small {
+        margin-right: $size-small !important;
+    }
+
+    .margin--right-msmall {
+        margin-right: $size-msmall !important;
+    }
+
+    .margin--right-medium {
+        margin-right: $size-medium !important;
+    }
+
+    .margin--right-large {
+        margin-right: $size-large !important;
+    }
+
+    .margin--right-xlarge {
+        margin-right: $size-xlarge !important;
+    }
+
+    .margin--bottom-none {
+        margin-bottom: 0 !important;
+    }
+
+    .margin--bottom-xsmall {
+        margin-bottom: $size-xsmall !important;
+    }
+
+    .margin--bottom-small {
+        margin-bottom: $size-small !important;
+    }
+
+    .margin--bottom-msmall {
+        margin-bottom: $size-msmall !important;
+    }
+
+    .margin--bottom-medium {
+        margin-bottom: $size-medium !important;
+    }
+
+    .margin--bottom-large {
+        margin-bottom: $size-large !important;
+    }
+
+    .margin--bottom-xlarge {
+        margin-bottom: $size-xlarge !important;
+    }
+
+    .margin--left-none {
+        margin-left: 0 !important;
+    }
+
+    .margin--left-xsmall {
+        margin-left: $size-xsmall !important;
+    }
+
+    .margin--left-small {
+        margin-left: $size-small !important;
+    }
+
+    .margin--left-msmall {
+        margin-left: $size-msmall !important;
+    }
+
+    .margin--left-medium {
+        margin-left: $size-medium !important;
+    }
+
+    .margin--left-large {
+        margin-left: $size-large !important;
+    }
+
+    .margin--left-xlarge {
+        margin-left: $size-xlarge !important;
+    }
+}
