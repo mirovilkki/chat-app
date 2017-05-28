@@ -7,43 +7,7 @@ const Chat = () => {
     const currentRoomId = participant.view('currentRoom')
 
     const chatRooms = Atom([
-        {
-            id: 'main',
-            title: 'Main',
-            messages: [
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' },
-                { sender: 'Matias', text: 'message', timeStamp: '11123124' }]
-        },
+        { id: 'main', title: 'Main', messages: [] },
         { id: 'random', title: 'Random', messages: [] },
         { id: 'randomest', title: 'Randomest', messages: [] }])
 
