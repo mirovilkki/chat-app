@@ -4,9 +4,7 @@ import Kefir from 'kefir'
 import K, * as U from 'karet.util'
 import Atom from 'kefir.atom'
 import * as L from 'partial.lenses'
-// import { Promise } from 'bluebird'
 
-// global.Promise = Promise
 global.React = React
 global.Atom = Atom
 global.R = R
