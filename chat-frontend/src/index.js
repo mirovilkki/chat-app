@@ -10,6 +10,6 @@ if (module.hot) {
 }
 
 ReactDOM.render(
-    React.createElement(AppContainer, { className: 'app-container' }, React.createElement(Chat)),
+    React.createElement(AppContainer, { }, React.createElement(Chat)),
     document.getElementById('root')
 )

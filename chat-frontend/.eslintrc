@@ -60,6 +60,7 @@
         "K": false,
         "R": false,
         "Atom": false,
-        "L": false
+        "L": false,
+        "io": false
     }
 }

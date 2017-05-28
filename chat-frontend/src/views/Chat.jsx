@@ -1,16 +1,25 @@
 import { Button, TextInput, RadioButton, InlineList, MessageList } from 'components'
 
 const Chat = () => {
+    const hiddenUserID = Math.random().toString(36).substr(2, 9)
+    const socket = io('0.0.0.0:3000')
+    // socket.emit('register', hiddenUserID)
+
     const participant = Atom({ name: '', message: '', currentRoom: 'main' })
     const name = participant.view('name')
     const message = participant.view('message')
     const currentRoomId = participant.view('currentRoom')
+
+    name.onAny((value) => socket.emit('name', { id: hiddenUserID, name: value }))
 
     const chatRooms = Atom([
         { id: 'main', title: 'Main', messages: [] },
         { id: 'random', title: 'Random', messages: [] },
         { id: 'randomest', title: 'Randomest', messages: [] }])
 
+    /* socke.on('notifications', (notification) =>
+        R.map(({ id }) => , chatRooms.get())
+    ) */
 
     const findRoom = (id) => (rooms) => R.find(R.propEq('id', id), rooms)
 
@@ -28,19 +37,32 @@ const Chat = () => {
                 layout.offsetHeight - footer.offsetHeight - topArea.offsetHeight)
         ).flatMapLatest()
 
-    const prependMessage = (messages) => R.prepend({ sender: name.get(), text: message.get(), timeStamp: new Date().toISOString() }, messages)
+    const getMessage = () =>  ({ sender: name.get(), text: message.get(), timeStamp: new Date().toISOString() })
+    // const prependMessage = (messages) => R.prepend(getMessage(), messages)
 
     const sendMessage = () => {
-        const findCurrentRoom = L.find(R.propEq('id', currentRoomId.get()))
-        const selectedRoom = chatRooms.view(findCurrentRoom)
+        /* const findRoom = (id) => L.find(R.propEq('id', id))
+        const selectedRoom = chatRooms.view(findRoom(currentRoomId.get()))
 
         selectedRoom.modify((room) => {
             const allMessages = { messages: prependMessage(room.messages) }
             return R.merge(room, allMessages)
-        })
+        }) */
+
+        socket.emit('message', R.merge({ room: currentRoomId.get() }, getMessage()))
 
         message.set('')
     }
+
+    socket.on('message', (message) => {
+        const findRoom = (id) => L.find(R.propEq('id', id))
+        const selectedRoom = chatRooms.view(findRoom(message.room))
+
+        selectedRoom.modify((room) => {
+            const allMessages = { messages: R.prepend(message, room.messages) }
+            return R.merge(room, allMessages)
+        })
+    })
 
     const enterKeyEvent = Kefir
         .fromEvents(window, 'keypress')
