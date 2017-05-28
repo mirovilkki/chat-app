@@ -1,0 +1,29 @@
+@import 'src/styles/variables.scss';
+
+.messageList {
+    overflow: scroll;
+    height: 100%;
+    max-height: 100%;
+    font-family: 'Avenir Next';
+}
+
+.messageRow {
+    width: 100%;
+}
+
+.name {
+    text-align: left;
+    width: 50%;
+    display: inline-block;
+}
+
+.time {
+    text-align: right;
+    width: 50%;
+    display: inline-block;
+    color: $color-grey;
+}
+
+.messageRow + .messageRow {
+    padding-top: $size-xsmall;
+}

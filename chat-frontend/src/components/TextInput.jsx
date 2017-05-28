@@ -4,6 +4,7 @@ const TextInput = ({ id, name, value, placeholder }) => (
     <div className={styles.textInput}>
         <input
             id={id}
+            type="text"
             name={name}
             {...U.bind({ value })}
             placeholder={placeholder}

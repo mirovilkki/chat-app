@@ -1,5 +1,5 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
@@ -33,7 +33,8 @@ module.exports = {
     },
 
     module: {
-        rules: [{
+        rules: [
+            {
                 test: /\.jsx?$/,
                 use: [ 'babel-loader' ],
                 include: path.join(__dirname, 'src'),
@@ -46,11 +47,7 @@ module.exports = {
                     configFile: './.eslintrc',
                     emitWarning: true
                 }
-            },/* {
-                test: /\.(css|scss)$/,
-                use: [ 'style-loader', 'css-loader', 'postcss-loader', 'sass-loader?outputStyle=expanded&sourceMap']
-            },*/
-            {
+            }, {
                 test: /\.(css|scss)$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
@@ -63,7 +60,6 @@ module.exports = {
                 loader: 'sass-loader',
                 include: path.join(__dirname, 'src', 'styles')
             }
-
         ]
     },
 

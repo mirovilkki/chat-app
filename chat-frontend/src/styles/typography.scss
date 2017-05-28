@@ -13,6 +13,18 @@
         font-family: 'Federant';
         font-weight: 400;
         font-size: $size-base;
+
+        @media screen and (min-width: 576px) {
+            font-size: $size-base-sm;
+        }
+
+        @media screen and (min-width: 768px) {
+            font-size: $size-base-md;
+        }
+
+        @media screen and (min-width: 1024px) {
+            font-size: $size-base-lg;
+        }
     }
 
     body {
