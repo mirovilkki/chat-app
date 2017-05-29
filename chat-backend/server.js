@@ -6,8 +6,6 @@ const U = require('karet.util')
 
 const participants = U.atom([])
 
-participants.onAny((val) => console.log(val.value))
-
 const findUserWithID = (id) => (list) => R.findIndex(R.propEq('id', id), list)
 const userNameLens = (id) => R.lensPath([id, 'name'])
 
