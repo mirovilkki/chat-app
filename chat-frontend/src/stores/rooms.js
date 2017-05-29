@@ -26,6 +26,7 @@ socket.on('notification', (notification) =>
 )
 
 socket.on('participants', (parts) =>
+    console.log(parts) ||
     allParticipants.set(parts)
 )
 

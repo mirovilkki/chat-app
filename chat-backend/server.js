@@ -2,8 +2,11 @@ const app = require('express')()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const R = require('ramda')
+const U = require('karet.util')
 
-let participants = []
+const participants = U.atom([])
+
+participants.onAny((val) => console.log(val.value))
 
 const findUserWithID = (id) => (list) => R.findIndex(R.propEq('id', id), list)
 const userNameLens = (id) => R.lensPath([id, 'name'])
@@ -11,15 +14,16 @@ const userNameLens = (id) => R.lensPath([id, 'name'])
 io.on('connection', (socket) => {
 
     const hiddenUserID = Math.random().toString(36).substr(2, 9)
-    let sender = 'Unknown'
-    participants = R.prepend({ id: hiddenUserID, name: sender }, participants)
+    const sender = U.atom('Unknown')
+    participants.modify((list) => R.prepend({ id: hiddenUserID, name: sender.get() }, list))
     const findUser = findUserWithID(hiddenUserID)
 
-    io.emit('notification', { text: 'New chatter connected', sender: sender, timeStamp: new Date().toISOString() })
+    io.emit('notification', { text: 'New chatter connected', sender: sender.get(), timeStamp: new Date().toISOString() })
 
     socket.on('name', (name) => {
-        participants = R.over(userNameLens(findUser(participants)), () => name, participants)
-        io.emit('participants', participants)
+        participants.modify((list) => R.over(userNameLens(findUser(list)), () => name, list))
+        sender.set(name)
+        io.emit('participants', participants.get())
     })
 
     socket.on('message', (message) => {
@@ -27,9 +31,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-        io.emit('notification', { text: 'Chatter disconnected', sender: sender, timeStamp: new Date().toISOString() })
-        participants = R.remove(findUser(participants), 1, participants)
-        io.emit('participants', participants)
+        io.emit('notification', { text: 'Chatter disconnected', sender: sender.get(), timeStamp: new Date().toISOString() })
+        participants.modify((list) => R.remove(findUser(list), 1, list))
+        io.emit('participants', participants.get())
     })
 })
 
