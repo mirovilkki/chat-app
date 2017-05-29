@@ -13,14 +13,24 @@ io.on('connection', (socket) => {
 
     const hiddenUserID = Math.random().toString(36).substr(2, 9)
     const sender = U.atom('Unknown')
-    participants.modify((list) => R.prepend({ id: hiddenUserID, name: sender.get() }, list))
+    participants.modify((list) =>
+        R.prepend({ id: hiddenUserID, name: sender.get() }, list)
+    )
+
     const findUser = findUserWithID(hiddenUserID)
 
-    io.emit('notification', { text: 'New chatter connected', sender: sender.get(), timeStamp: new Date().toISOString() })
+    io.emit('notification', {
+        text: 'New chatter connected',
+        sender: sender.get(),
+        timeStamp: new Date().toISOString()
+    })
 
     socket.on('name', (name) => {
-        participants.modify((list) => R.over(userNameLens(findUser(list)), () => name, list))
         sender.set(name)
+
+        participants.modify((list) =>
+            R.over(userNameLens(findUser(list)), () => name, list)
+        )
         io.emit('participants', participants.get())
     })
 
@@ -29,8 +39,15 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-        io.emit('notification', { text: 'Chatter disconnected', sender: sender.get(), timeStamp: new Date().toISOString() })
-        participants.modify((list) => R.remove(findUser(list), 1, list))
+        io.emit('notification', {
+            text: 'Chatter disconnected',
+            sender: sender.get(),
+            timeStamp: new Date().toISOString()
+        })
+
+        participants.modify((list) =>
+            R.remove(findUser(list), 1, list)
+        )
         io.emit('participants', participants.get())
     })
 })
