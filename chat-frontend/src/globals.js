@@ -2,7 +2,7 @@ import React from 'karet'
 import R from 'ramda'
 import Kefir from 'kefir'
 import K, * as U from 'karet.util'
-import Atom from 'kefir.atom'
+import { Atom } from 'kefir.atom'
 import * as L from 'partial.lenses'
 import io from 'socket.io-client'
 

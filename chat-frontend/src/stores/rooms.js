@@ -1,11 +1,11 @@
 import socket from 'api'
 
-const chatRooms = Atom([
+const chatRooms = new Atom([
     { id: 'main', title: 'Main', messages: [] },
     { id: 'random', title: 'Random', messages: [] },
     { id: 'randomest', title: 'Randomest', messages: [] }])
 
-const allParticipants = Atom([])
+const allParticipants = new Atom([])
 
 const findRoom = (roomId) => L.find(R.propEq('id', roomId))
 

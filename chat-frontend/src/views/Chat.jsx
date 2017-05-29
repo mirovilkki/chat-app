@@ -13,9 +13,9 @@ const Chat = () => {
         R.prop('messages', findRoom(current)(chatRooms))
     )
 
-    const footerElem = Atom({})
-    const topAreaElem = Atom({})
-    const layoutElem = Atom({})
+    const footerElem = new Atom({})
+    const topAreaElem = new Atom({})
+    const layoutElem = new Atom({})
 
     const messageAreaHeight = K(footerElem, topAreaElem, layoutElem,
         (footer, topArea, layout) =>
@@ -61,9 +61,11 @@ const Chat = () => {
                 <div className="padding--bottom-medium">
                     <InlineList>
                         <p className="padding--right-xsmall">{'Participants:'}</p>
-                        {U.map((particioner) =>
-                            <p className="padding--right-xsmall"><small>{particioner.name}</small></p>
-                        , participants)}
+                        {U.map((particioner) => (
+                            <p key={`particioner-${particioner.id}`} className="padding--right-xsmall" >
+                                <small>{particioner.name}</small>
+                            </p>
+                        ), participants)}
                     </InlineList>
                 </div>
             </div>

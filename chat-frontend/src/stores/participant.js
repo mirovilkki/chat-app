@@ -1,6 +1,6 @@
 import socket from 'api'
 
-const participant = Atom({ name: '', message: '', currentRoom: 'main' })
+const participant = new Atom({ name: '', message: '', currentRoom: 'main' })
 const name = participant.view('name')
 const message = participant.view('message')
 const currentRoomId = participant.view('currentRoom')
