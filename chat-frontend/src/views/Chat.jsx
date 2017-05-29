@@ -1,27 +1,13 @@
 import { Button, TextInput, RadioButton, InlineList, MessageList } from 'components'
+import { chatRooms } from 'stores/rooms'
+import { participant, sendMessage } from 'stores/participant'
 
 const Chat = () => {
-    const hiddenUserID = Math.random().toString(36).substr(2, 9)
-    const socket = io('0.0.0.0:3000')
-    // socket.emit('register', hiddenUserID)
-
-    const participant = Atom({ name: '', message: '', currentRoom: 'main' })
     const name = participant.view('name')
     const message = participant.view('message')
     const currentRoomId = participant.view('currentRoom')
 
-    name.onAny((value) => socket.emit('name', { id: hiddenUserID, name: value }))
-
-    const chatRooms = Atom([
-        { id: 'main', title: 'Main', messages: [] },
-        { id: 'random', title: 'Random', messages: [] },
-        { id: 'randomest', title: 'Randomest', messages: [] }])
-
-    /* socke.on('notifications', (notification) =>
-        R.map(({ id }) => , chatRooms.get())
-    ) */
-
-    const findRoom = (id) => (rooms) => R.find(R.propEq('id', id), rooms)
+    const findRoom = (roomId) => (rooms) => R.find(R.propEq('id', roomId), rooms)
 
     const currentRoomMessages = K(currentRoomId, chatRooms, (current, rooms) =>
         R.prop('messages', findRoom(current)(rooms))
@@ -37,42 +23,12 @@ const Chat = () => {
                 layout.offsetHeight - footer.offsetHeight - topArea.offsetHeight)
         ).flatMapLatest()
 
-    const getMessage = () =>  ({ sender: name.get(), text: message.get(), timeStamp: new Date().toISOString() })
-    // const prependMessage = (messages) => R.prepend(getMessage(), messages)
-
-    const sendMessage = () => {
-        /* const findRoom = (id) => L.find(R.propEq('id', id))
-        const selectedRoom = chatRooms.view(findRoom(currentRoomId.get()))
-
-        selectedRoom.modify((room) => {
-            const allMessages = { messages: prependMessage(room.messages) }
-            return R.merge(room, allMessages)
-        }) */
-
-        socket.emit('message', R.merge({ room: currentRoomId.get() }, getMessage()))
-
-        message.set('')
-    }
-
-    socket.on('message', (message) => {
-        const findRoom = (id) => L.find(R.propEq('id', id))
-        const selectedRoom = chatRooms.view(findRoom(message.room))
-
-        selectedRoom.modify((room) => {
-            const allMessages = { messages: R.prepend(message, room.messages) }
-            return R.merge(room, allMessages)
-        })
-    })
-
     const enterKeyEvent = Kefir
         .fromEvents(window, 'keypress')
         .filter((e) => R.equals(e.keyCode || e.which, 13))
         .filter(() => !R.or(R.isEmpty(message.get()), R.isEmpty(name.get())))
 
-    enterKeyEvent.onValue(() => {
-        sendMessage()
-        message.set('')
-    })
+    enterKeyEvent.onValue(() => sendMessage())
 
     return (
         <div className="layout" ref={U.refTo(layoutElem)}>
