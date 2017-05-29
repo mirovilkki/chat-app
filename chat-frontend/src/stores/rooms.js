@@ -5,7 +5,7 @@ const chatRooms = Atom([
     { id: 'random', title: 'Random', messages: [] },
     { id: 'randomest', title: 'Randomest', messages: [] }])
 
-const participants = Atom([])
+const allParticipants = Atom([])
 
 const findRoom = (roomId) => L.find(R.propEq('id', roomId))
 
@@ -26,10 +26,8 @@ socket.on('notification', (notification) =>
 )
 
 socket.on('participants', (parts) =>
-    participants.set(parts)
+    allParticipants.set(parts)
 )
 
-export {
-    chatRooms,
-    participants
-}
+export const rooms = chatRooms.map((value) => value)
+export const participants = allParticipants.map((value) => value)

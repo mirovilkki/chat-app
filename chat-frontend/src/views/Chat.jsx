@@ -1,5 +1,5 @@
 import { Button, TextInput, RadioButton, InlineList, MessageList } from 'components'
-import { chatRooms, participants } from 'stores/rooms'
+import { rooms, participants } from 'stores/rooms'
 import { participant, sendMessage } from 'stores/participant'
 
 const Chat = () => {
@@ -9,8 +9,8 @@ const Chat = () => {
 
     const findRoom = (roomId) => (rooms) => R.find(R.propEq('id', roomId), rooms)
 
-    const currentRoomMessages = K(currentRoomId, chatRooms, (current, rooms) =>
-        R.prop('messages', findRoom(current)(rooms))
+    const currentRoomMessages = K(currentRoomId, rooms, (current, chatRooms) =>
+        R.prop('messages', findRoom(current)(chatRooms))
     )
 
     const footerElem = Atom({})
@@ -55,7 +55,7 @@ const Chat = () => {
                                     title={room.title}
                                     onChange={(e) => currentRoomId.set(e.target.value)} />
                             )
-                        }, chatRooms)}
+                        }, rooms)}
                     </InlineList>
                 </div>
                 <div className="padding--bottom-medium">
