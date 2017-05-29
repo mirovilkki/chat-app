@@ -7,13 +7,12 @@ module.exports = {
     context: path.join(__dirname, 'src'),
 
     resolve: {
-        modules: ['src', 'node_modules']
+        modules: [path.join(__dirname, 'src'), 'node_modules']
     },
 
     entry: [
         'react-hot-loader/patch',
         'webpack-dev-server/client?http://localhost:8080',
-        'webpack/hot/only-dev-server',
         './index.js'
     ],
 
@@ -52,9 +51,10 @@ module.exports = {
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
-                        'css-loader?modules&localIdentName=[local]___[hash:base64:5]&sourceMap',
-                        'postcss-loader',
-                        'sass-loader?outputStyle=expanded&sourceMap']
+                        { loader: 'css-loader?modules&localIdentName=[local]___[hash:base64:5]&sourceMap' },
+                        { loader: 'postcss-loader', options: { sourceMap: true } },
+                        { loader: 'sass-loader?outputStyle=expanded&sourceMap' }
+                    ]
                 })
             }, {
                 loader: 'sass-loader',
@@ -69,7 +69,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'index.html',
             filename: 'index.html',
-            inject: 'body'
+            inject: false
         }),
         new ExtractTextPlugin({ filename: 'assets/styles/styles.css', disable: true })
     ]

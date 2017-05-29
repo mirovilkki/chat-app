@@ -1,5 +1,5 @@
 import { Button, TextInput, RadioButton, InlineList, MessageList } from 'components'
-import { chatRooms } from 'stores/rooms'
+import { chatRooms, participants } from 'stores/rooms'
 import { participant, sendMessage } from 'stores/participant'
 
 const Chat = () => {
@@ -41,7 +41,7 @@ const Chat = () => {
                         placeholder="Type Your Name Here"
                         value={name} />
                 </div>
-                <div className="padding--bottom-medium">
+                <div className="margin--bottom-medium">
                     <InlineList>
                         {U.map((room) => {
                             const isChecked = U.propEq('id', currentRoomId, room)
@@ -56,6 +56,14 @@ const Chat = () => {
                                     onChange={(e) => currentRoomId.set(e.target.value)} />
                             )
                         }, chatRooms)}
+                    </InlineList>
+                </div>
+                <div className="padding--bottom-medium">
+                    <InlineList>
+                        <p className="padding--right-xsmall">{'Participants:'}</p>
+                        {U.map((particioner) =>
+                            <p className="padding--right-xsmall"><small>{particioner.name}</small></p>
+                        , participants)}
                     </InlineList>
                 </div>
             </div>
