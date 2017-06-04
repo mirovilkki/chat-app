@@ -7,37 +7,39 @@ const U = require('karet.util')
 const participants = U.atom([])
 
 const findUserWithID = (id) => (list) => R.findIndex(R.propEq('id', id), list)
-const userNameLens = (id) => R.lensPath([id, 'name'])
+const participantsNameLens = (id) => R.lensPath([id, 'name'])
 
 io.on('connection', (socket) => {
 
     const hiddenUserID = Math.random().toString(36).substr(2, 9)
+    const findUserIndex = findUserWithID(hiddenUserID)
     const sender = U.atom('Unknown')
     participants.modify((list) =>
         R.prepend({ id: hiddenUserID, name: sender.get() }, list)
     )
 
-    const findUser = findUserWithID(hiddenUserID)
-
+    // Emit new user notification
     io.emit('notification', {
         text: 'New chatter connected',
         sender: sender.get(),
         timeStamp: new Date().toISOString()
     })
 
+    // Listen changes to user name and store it
     socket.on('name', (name) => {
         sender.set(name)
 
         participants.modify((list) =>
-            R.over(userNameLens(findUser(list)), () => name, list)
+            R.over(participantsNameLens(findUserIndex(list)), () => name, list)
         )
-        io.emit('participants', participants.get())
     })
 
+    // Emit all messages
     socket.on('message', (message) => {
         io.emit('message', message)
     })
 
+    // Emit disconnect notifications and remove user from participants list
     socket.on('disconnect', () => {
         io.emit('notification', {
             text: 'Chatter disconnected',
@@ -46,9 +48,15 @@ io.on('connection', (socket) => {
         })
 
         participants.modify((list) =>
-            R.remove(findUser(list), 1, list)
+            R.remove(findUserIndex(list), 1, list)
         )
-        io.emit('participants', participants.get())
+    })
+
+    // Emit all changes to participants list
+    participants.onAny((any) => {
+        if (!R.isNil(any.value)) {
+            io.emit('participants', any.value)
+        }
     })
 })
 
